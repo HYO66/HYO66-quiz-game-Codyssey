@@ -1,8 +1,7 @@
-{
-  "quizzes": [
-    {
-      "question": "Python의 파일 확장자는?",
-      "answer": "py"
-    }
-  ]
-}
+[
+  {
+    "question": "Python에서 출력할 때 사용하는 함수는?",
+    "options": ["input", "print", "int"],
+    "answer": "2"
+  }
+]
