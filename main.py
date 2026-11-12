@@ -27,10 +27,13 @@ if choice == "1":
             print("정답입니다!")
             score += 1
         else:
-            print("틀렸습니다.")
+            correct_index = int(quiz["answer"]) - 1
+            correct_option = quiz["options"][correct_index]
+            print(f"틀렸습니다. 정답은 {quiz['answer']}번: {correct_option} 입니다.")
 
     print()
     print(f"총 점수: {len(quiz_data)}문제 중 {score}문제 정답")
+
 elif choice == "2":
     print("프로그램을 종료합니다.")
 else:
