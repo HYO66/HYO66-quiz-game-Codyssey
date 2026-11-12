@@ -12,7 +12,7 @@ class Quiz:
         for index, choice in enumerate(self.choices, start=1):
             print(f"{index}. {choice}")
 
-    def check_answer(self, user_answer):
+    def is_correct(self, user_answer):
         return user_answer == self.answer
 
     def to_dict(self):
@@ -94,7 +94,36 @@ class QuizGame:
 
     def play_quiz(self):
         print("\n퀴즈 시작!")
-        print("아직 상세 로직은 다음 단계에서 구현합니다.")
+        score = 0
+
+        for quiz in self.quizzes:
+            quiz.display()
+            user_input = input("정답 번호를 입력하세요: ")
+
+            if not user_input.isdigit():
+                print("숫자만 입력하세요.")
+                continue
+
+            user_answer = int(user_input)
+
+            if user_answer < 1 or user_answer > len(quiz.choices):
+                print("보기 번호 범위 안에서 입력하세요.")
+                continue
+
+            if quiz.is_correct(user_answer):
+                print("정답입니다!")
+                score += 1
+            else:
+                print(f"오답입니다. 정답은 {quiz.answer}번입니다.")
+
+        print(f"\n이번 점수: {score}/{len(self.quizzes)}")
+
+        if score > self.best_score:
+            self.best_score = score
+            self.save_state()
+            print("최고 점수를 갱신했습니다!")
+        else:
+           print(f"현재 최고 점수: {self.best_score}")
 
     def run(self):
         while True:
