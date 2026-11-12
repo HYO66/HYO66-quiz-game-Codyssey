@@ -12,18 +12,25 @@ choice = input("메뉴를 선택하세요: ")
 if choice == "1":
     print("퀴즈를 시작합니다.")
 
-    quiz = quiz_data[0]
-    print("문제:", quiz["question"])
+    score = 0
 
-    for i, option in enumerate(quiz["options"], start=1):
-        print(f"{i}. {option}")
+    for quiz in quiz_data:
+        print()
+        print("문제:", quiz["question"])
 
-    answer = input("정답 번호를 입력하세요: ")
+        for i, option in enumerate(quiz["options"], start=1):
+            print(f"{i}. {option}")
 
-    if answer == quiz["answer"]:
-        print("정답입니다!")
-    else:
-        print("틀렸습니다.")
+        answer = input("정답 번호를 입력하세요: ")
+
+        if answer == quiz["answer"]:
+            print("정답입니다!")
+            score += 1
+        else:
+            print("틀렸습니다.")
+
+    print()
+    print(f"총 점수: {len(quiz_data)}문제 중 {score}문제 정답")
 elif choice == "2":
     print("프로그램을 종료합니다.")
 else:
