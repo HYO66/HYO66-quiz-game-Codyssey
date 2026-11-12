@@ -21,20 +21,65 @@ class Quiz:
 
     @classmethod
     def from_dict(cls, data):
-        return cls(
-            data["question"],
-            data["choices"],
-            data["answer"]
-        )
+        return cls(data["question"], data["choices"], data["answer"])
+
+
+class QuizGame:
+    def __init__(self):
+        self.quizzes = []
+        self.best_score = 0
+        self.load_default_quizzes()
+
+    def load_default_quizzes(self):
+        self.quizzes = [
+            Quiz(
+                "Python에서 리스트의 길이를 구하는 함수는?",
+                ["size()", "length()", "len()", "count()"],
+                3
+            ),
+            Quiz(
+                "Python에서 문자열을 정수로 변환하는 함수는?",
+                ["str()", "int()", "float()", "input()"],
+                2
+            ),
+            Quiz(
+                "Python에서 반복문에 사용하는 키워드는?",
+                ["if", "for", "def", "class"],
+                2
+            )
+        ]
+
+    def show_menu(self):
+        print("\n===== 퀴즈 게임 =====")
+        print("1. 퀴즈 시작")
+        print("2. 퀴즈 목록 보기")
+        print("0. 종료")
+
+    def show_quizzes(self):
+        print("\n[퀴즈 목록]")
+        for index, quiz in enumerate(self.quizzes, start=1):
+            print(f"{index}. {quiz.question}")
+
+    def play_quiz(self):
+        print("\n퀴즈 시작!")
+        print("아직 상세 로직은 다음 단계에서 구현합니다.")
+
+    def run(self):
+        while True:
+            self.show_menu()
+            choice = input("메뉴를 선택하세요: ")
+
+            if choice == "1":
+                self.play_quiz()
+            elif choice == "2":
+                self.show_quizzes()
+            elif choice == "0":
+                print("게임을 종료합니다.")
+                break
+            else:
+                print("올바른 메뉴 번호를 입력하세요.")
 
 
 if __name__ == "__main__":
-    sample_quiz = Quiz(
-        "Python에서 리스트의 길이를 구하는 함수는?",
-        ["size()", "length()", "len()", "count()"],
-        3
-    )
-
-    sample_quiz.display()
-    print("정답 확인:", sample_quiz.check_answer(3))
-    print("딕셔너리 변환:", sample_quiz.to_dict())
+    game = QuizGame()
+    game.run()
