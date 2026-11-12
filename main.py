@@ -1,3 +1,6 @@
+import json
+
+
 class Quiz:
     def __init__(self, question, choices, answer):
         self.question = question
@@ -28,7 +31,7 @@ class QuizGame:
     def __init__(self):
         self.quizzes = []
         self.best_score = 0
-        self.load_default_quizzes()
+        self.load_state()
 
     def load_default_quizzes(self):
         self.quizzes = [
@@ -48,6 +51,35 @@ class QuizGame:
                 2
             )
         ]
+
+    def load_state(self):
+        try:
+            with open("state.json", "r", encoding="utf-8") as file:
+                data = json.load(file)
+
+            self.best_score = data.get("best_score", 0)
+            self.quizzes = [
+                Quiz.from_dict(quiz_data)
+                for quiz_data in data.get("quizzes", [])
+            ]
+
+            if not self.quizzes:
+                self.load_default_quizzes()
+                self.save_state()
+
+        except (FileNotFoundError, json.JSONDecodeError):
+            self.best_score = 0
+            self.load_default_quizzes()
+            self.save_state()
+
+    def save_state(self):
+        data = {
+            "best_score": self.best_score,
+            "quizzes": [quiz.to_dict() for quiz in self.quizzes]
+        }
+
+        with open("state.json", "w", encoding="utf-8") as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
 
     def show_menu(self):
         print("\n===== 퀴즈 게임 =====")
